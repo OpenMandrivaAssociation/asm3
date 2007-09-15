@@ -3,7 +3,7 @@
 
 Name:           asm3
 Version:        3.0
-Release:        %mkrel 2
+Release:        %mkrel 3
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style
@@ -16,8 +16,6 @@ BuildRequires:  ant
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  objectweb-anttask
 %if %{gcj_support}
-Requires(post): java-gcj-compat        
-Requires(postun): java-gcj-compat
 BuildRequires:  java-gcj-compat-devel
 %else
 BuildArch:      noarch

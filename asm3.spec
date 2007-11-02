@@ -2,8 +2,8 @@
 %define section         free
 
 Name:           asm3
-Version:        3.0
-Release:        %mkrel 3
+Version:        3.1
+Release:        %mkrel 0.0.1
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style
@@ -11,7 +11,7 @@ URL:            http://asm.objectweb.org/
 Group:          Development/Java
 #Vendor:        JPackage Project
 #Distribution:  JPackage
-Source0:        http://download.fr2.forge.objectweb.org/asm/asm-3.0.tar.gz
+Source0:        http://download.fr2.forge.objectweb.org/asm/asm-%{version}.tar.gz
 BuildRequires:  ant
 BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  objectweb-anttask

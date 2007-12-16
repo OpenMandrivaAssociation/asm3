@@ -3,7 +3,7 @@
 
 Name:           asm3
 Version:        3.1
-Release:        %mkrel 0.0.1
+Release:        %mkrel 0.0.2
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style
@@ -13,7 +13,7 @@ Group:          Development/Java
 #Distribution:  JPackage
 Source0:        http://download.fr2.forge.objectweb.org/asm/asm-%{version}.tar.gz
 BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  java-rpmbuild >= 0:1.6
 BuildRequires:  objectweb-anttask
 %if %{gcj_support}
 BuildRequires:  java-gcj-compat-devel

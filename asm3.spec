@@ -3,7 +3,7 @@
 
 Name:           asm3
 Version:        3.1
-Release:        %mkrel 0.0.2
+Release:        %mkrel 0.0.3
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style
@@ -12,6 +12,12 @@ Group:          Development/Java
 #Vendor:        JPackage Project
 #Distribution:  JPackage
 Source0:        http://download.fr2.forge.objectweb.org/asm/asm-%{version}.tar.gz
+Source1:		asm-3.0.pom
+Source2:		asm-analysis-3.0.pom
+Source3:		asm-commons-3.0.pom
+Source4:		asm-tree-3.0.pom
+Source5:		asm-util-3.0.pom
+Source6:		asm-xml-3.0.pom
 BuildRequires:  ant
 BuildRequires:  java-rpmbuild >= 0:1.6
 BuildRequires:  objectweb-anttask
@@ -57,6 +63,28 @@ done
 
 (cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
 
+#poms
+%add_to_maven_depmap asm asm %{version} JPP/asm3 asm3
+%add_to_maven_depmap asm asm-util %{version} JPP/asm3 asm3-util
+%add_to_maven_depmap asm asm-analysis %{version} JPP/asm3 asm3-analysis
+%add_to_maven_depmap asm asm-commons %{version} JPP/asm3 asm3-commons
+%add_to_maven_depmap asm asm-tree %{version} JPP/asm3 asm3-tree
+%add_to_maven_depmap asm asm-xml %{version} JPP/asm3 asm3-xml
+
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -pm 644 %{SOURCE1} \
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm.pom
+install -pm 644 %{SOURCE2} \
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-util.pom
+install -pm 644 %{SOURCE3} \
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-analysis.pom
+install -pm 644 %{SOURCE4} \
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-commons.pom
+install -pm 644 %{SOURCE5} \
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-tree.pom
+install -pm 644 %{SOURCE6} \
+    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-xml.pom
+
 # javadoc
 %{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
 %{__cp} -a output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}-%{version}
@@ -72,11 +100,15 @@ done
 %clean
 %{__rm} -rf %{buildroot}
 
-%if %{gcj_support}
 %post
+%update_maven_depmap
+%if %{gcj_support}
 %{update_gcjdb}
+%endif
 
 %postun
+%update_maven_depmap
+%if %{gcj_support}
 %{clean_gcjdb}
 %endif
 
@@ -85,6 +117,8 @@ done
 %doc README.txt
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/*.jar
+%{_datadir}/maven2/poms/*
+%config(noreplace) %{_mavendepmapfragdir}/*
 %if %{gcj_support}
 %dir %{_libdir}/gcj/%{name}
 %attr(-,root,root) %{_libdir}/gcj/%{name}/*.jar.*

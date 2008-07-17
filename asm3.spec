@@ -1,16 +1,14 @@
-%define gcj_support     1
+%define gcj_support     0
 %define section         free
 
 Name:           asm3
 Version:        3.1
-Release:        %mkrel 0.0.3
+Release:        %mkrel 0.0.4
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style
 URL:            http://asm.objectweb.org/
 Group:          Development/Java
-#Vendor:        JPackage Project
-#Distribution:  JPackage
 Source0:        http://download.fr2.forge.objectweb.org/asm/asm-%{version}.tar.gz
 Source1:		asm-3.0.pom
 Source2:		asm-analysis-3.0.pom
@@ -18,6 +16,7 @@ Source3:		asm-commons-3.0.pom
 Source4:		asm-tree-3.0.pom
 Source5:		asm-util-3.0.pom
 Source6:		asm-xml-3.0.pom
+Source7:		asm-MANIFEST.MF
 BuildRequires:  ant
 BuildRequires:  java-rpmbuild >= 0:1.6
 BuildRequires:  objectweb-anttask
@@ -49,6 +48,11 @@ export CLASSPATH=:
 export OPT_JAR_LIST=:
 %{ant} -Dobjectweb.ant.tasks.path=$(build-classpath objectweb-anttask) jar jdoc
 
+# inject OSGi manifests
+mkdir -p META-INF
+cp %{SOURCE7} META-INF/MANIFEST.MF
+zip -u output/dist/lib/all/asm-all-%{version}.jar META-INF/MANIFEST.MF
+
 %install
 %{__rm} -rf %{buildroot}
 
@@ -60,6 +64,9 @@ newjar=${jar/asm-/%{name}-}
 %{__install} -m 644 ${jar} \
 %{buildroot}%{_javadir}/%{name}/`basename ${newjar}`
 done
+
+install -m 644 output/dist/lib/all/asm-all-%{version}.jar \
+$RPM_BUILD_ROOT%{_javadir}/%{name}/asm-all-%{version}.jar
 
 (cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
 
@@ -90,9 +97,7 @@ install -pm 644 %{SOURCE6} \
 %{__cp} -a output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 (cd %{buildroot}%{_javadocdir} && %{__ln_s} %{name}-%{version} %{name})
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+%{gcj_compile}
 
 # fix end-of-line
 %{__perl} -pi -e 's/\r$//g' README.txt
@@ -119,10 +124,7 @@ install -pm 644 %{SOURCE6} \
 %{_javadir}/%{name}/*.jar
 %{_datadir}/maven2/poms/*
 %config(noreplace) %{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%attr(-,root,root) %{_libdir}/gcj/%{name}/*.jar.*
-%endif
+%{gcj_files}
 
 %files javadoc
 %defattr(0644,root,root,0755)

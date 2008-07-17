@@ -20,6 +20,7 @@ Source7:		asm-MANIFEST.MF
 BuildRequires:  ant
 BuildRequires:  java-rpmbuild >= 0:1.6
 BuildRequires:  objectweb-anttask
+BuildRequires:  zip
 %if %{gcj_support}
 BuildRequires:  java-gcj-compat-devel
 %else

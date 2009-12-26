@@ -2,7 +2,7 @@
 %define section         free
 
 Name:           asm3
-Version:        3.1
+Version:        3.2
 Release:        %mkrel 0.0.5
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems

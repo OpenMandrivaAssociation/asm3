@@ -3,7 +3,7 @@
 
 Name:           asm3
 Version:        3.2
-Release:        %mkrel 0.0.5
+Release:        %mkrel 0.0.6
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style

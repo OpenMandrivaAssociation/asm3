@@ -67,7 +67,7 @@ newjar=${jar/asm-/%{name}-}
 done
 
 install -m 644 output/dist/lib/all/asm-all-%{version}.jar \
-$RPM_BUILD_ROOT%{_javadir}/%{name}/asm-all-%{version}.jar
+%{buildroot}%{_javadir}/%{name}/asm-all-%{version}.jar
 
 (cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
 
@@ -79,19 +79,19 @@ $RPM_BUILD_ROOT%{_javadir}/%{name}/asm-all-%{version}.jar
 %add_to_maven_depmap asm asm-tree %{version} JPP/asm3 asm3-tree
 %add_to_maven_depmap asm asm-xml %{version} JPP/asm3 asm3-xml
 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
 install -pm 644 %{SOURCE1} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.asm.pom
 install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-util.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.asm-util.pom
 install -pm 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-analysis.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.asm-analysis.pom
 install -pm 644 %{SOURCE4} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-commons.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.asm-commons.pom
 install -pm 644 %{SOURCE5} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-tree.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.asm-tree.pom
 install -pm 644 %{SOURCE6} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.asm-xml.pom
+    %{buildroot}%{_datadir}/maven2/poms/JPP.asm-xml.pom
 
 # javadoc
 %{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}

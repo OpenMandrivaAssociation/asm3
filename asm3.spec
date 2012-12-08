@@ -3,7 +3,7 @@
 
 Name:           asm3
 Version:        3.2
-Release:        %mkrel 0.0.7
+Release:        1
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD-style
@@ -27,7 +27,6 @@ BuildRequires:  java-gcj-compat-devel
 BuildArch:      noarch
 BuildRequires:  java-devel
 %endif
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 ASM is a code manipulation tool to implement adaptable systems.
@@ -95,16 +94,13 @@ install -pm 644 %{SOURCE6} \
 
 # javadoc
 %{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -a output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -a output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 (cd %{buildroot}%{_javadocdir} && %{__ln_s} %{name}-%{version} %{name})
 
 %{gcj_compile}
 
 # fix end-of-line
 %{__perl} -pi -e 's/\r$//g' README.txt
-
-%clean
-%{__rm} -rf %{buildroot}
 
 %post
 %update_maven_depmap
@@ -132,4 +128,59 @@ install -pm 644 %{SOURCE6} \
 %dir %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}-%{version}/*
 %dir %{_javadocdir}/%{name}
+
+
+
+%changelog
+* Mon May 02 2011 Oden Eriksson <oeriksson@mandriva.com> 0:3.2-0.0.7mdv2011.0
++ Revision: 662793
+- mass rebuild
+
+* Mon Nov 29 2010 Oden Eriksson <oeriksson@mandriva.com> 0:3.2-0.0.6mdv2011.0
++ Revision: 603187
+- rebuild
+
+* Sat Dec 26 2009 Funda Wang <fwang@mandriva.org> 0:3.2-0.0.5mdv2010.1
++ Revision: 482356
+- new version 3.2
+
+* Sun Aug 09 2009 Oden Eriksson <oeriksson@mandriva.com> 0:3.1-0.0.5mdv2010.0
++ Revision: 413041
+- rebuild
+
+* Thu Jul 17 2008 Alexander Kurtakov <akurtakov@mandriva.org> 0:3.1-0.0.4mdv2009.0
++ Revision: 237687
+- BR zip
+- install asm-all.jar (needed for eclipse 3.4)
+
+* Tue Jan 22 2008 Alexander Kurtakov <akurtakov@mandriva.org> 0:3.1-0.0.3mdv2008.1
++ Revision: 156395
+- add maven2 support -poms and depmaps
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sun Dec 16 2007 Anssi Hannula <anssi@mandriva.org> 0:3.1-0.0.2mdv2008.1
++ Revision: 120831
+- buildrequire java-rpmbuild, i.e. build with icedtea on x86(_64)
+
+* Fri Nov 02 2007 David Walluck <walluck@mandriva.org> 0:3.1-0.0.1mdv2008.1
++ Revision: 105369
+- 3.1
+
+* Sat Sep 15 2007 Anssi Hannula <anssi@mandriva.org> 0:3.0-3mdv2008.0
++ Revision: 87207
+- rebuild to filter out autorequires of GCJ AOT objects
+- remove unnecessary Requires(post) on java-gcj-compat
+
+* Sun Sep 09 2007 Pascal Terjan <pterjan@mandriva.org> 0:3.0-2mdv2008.0
++ Revision: 82971
+- rebuild
+
+* Mon Apr 23 2007 David Walluck <walluck@mandriva.org> 0:3.0-1mdv2008.0
++ Revision: 17693
+- Import asm3
 

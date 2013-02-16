@@ -1,41 +1,33 @@
-%define gcj_support     0
-%define section         free
-
-Name:           asm3
-Version:        3.2
-Release:        1
-Epoch:          0
-Summary:        Code manipulation tool to implement adaptable systems
-License:        BSD-style
-URL:            http://asm.objectweb.org/
-Group:          Development/Java
-Source0:        http://download.fr2.forge.objectweb.org/asm/asm-%{version}.tar.gz
-Source1:		asm-3.0.pom
-Source2:		asm-analysis-3.0.pom
-Source3:		asm-commons-3.0.pom
-Source4:		asm-tree-3.0.pom
-Source5:		asm-util-3.0.pom
-Source6:		asm-xml-3.0.pom
-Source7:		asm-MANIFEST.MF
-BuildRequires:  ant
-BuildRequires:  java-rpmbuild >= 0:1.6
-BuildRequires:  objectweb-anttask
-BuildRequires:  zip
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
-BuildArch:      noarch
-BuildRequires:  java-devel
-%endif
+Name:		asm3
+Version:	3.3.1
+Release:	1
+Summary:	Code manipulation tool to implement adaptable systems
+License:	BSD-style
+URL:		http://asm.objectweb.org/
+Group:		Development/Java
+Source0:	http://download.forge.objectweb.org/asm/asm-%version.tar.gz
+Source1:	asm-3.0.pom
+Source2:	asm-analysis-3.0.pom
+Source3:	asm-commons-3.0.pom
+Source4:	asm-tree-3.0.pom
+Source5:	asm-util-3.0.pom
+Source6:	asm-xml-3.0.pom
+Source7:	asm-MANIFEST.MF
+BuildRequires:	ant
+BuildRequires:	java-rpmbuild >= 0:1.6
+BuildRequires:	objectweb-anttask
+BuildRequires:	zip
+BuildArch:	noarch
+BuildRequires:	java-1.6.0-openjdk-devel
 
 %description
 ASM is a code manipulation tool to implement adaptable systems.
 
-%package        javadoc
-Summary:        Javadoc for %{name}
-Group:                Development/Java
+%package	javadoc
+Summary:	Javadoc for %{name}
+Group:		Development/Java
 
-%description        javadoc
+%description	javadoc
 Javadoc for %{name}.
 
 %prep
@@ -97,22 +89,14 @@ install -pm 644 %{SOURCE6} \
 cp -a output/dist/doc/javadoc/user/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 (cd %{buildroot}%{_javadocdir} && %{__ln_s} %{name}-%{version} %{name})
 
-%{gcj_compile}
-
 # fix end-of-line
 %{__perl} -pi -e 's/\r$//g' README.txt
 
 %post
 %update_maven_depmap
-%if %{gcj_support}
-%{update_gcjdb}
-%endif
 
 %postun
 %update_maven_depmap
-%if %{gcj_support}
-%{clean_gcjdb}
-%endif
 
 %files
 %defattr(0644,root,root,0755)

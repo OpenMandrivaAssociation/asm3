@@ -1,6 +1,6 @@
 Name:		asm3
 Version:	3.3.1
-Release:	7
+Release:	8
 Summary:	Code manipulation tool to implement adaptable systems
 License:	BSD-style
 URL:		http://asm.objectweb.org/

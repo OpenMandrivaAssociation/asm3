@@ -3,7 +3,7 @@ Version:	3.3.1
 Release:	8
 Summary:	Code manipulation tool to implement adaptable systems
 License:	BSD-style
-URL:		http://asm.objectweb.org/
+URL:		https://asm.objectweb.org/
 Group:		Development/Java
 Source0:	http://download.forge.objectweb.org/asm/asm-%version.tar.gz
 Source1:	asm-3.0.pom
